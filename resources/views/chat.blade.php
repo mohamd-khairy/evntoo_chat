@@ -108,12 +108,20 @@
 @push('scripts')
 <script>
     $(function() {
+        let user_id = "{{ auth()->user()->id }}";
+        let selected_chat_id = "{{ $selected_chat ? $selected_chat->id : null }}";
+        let selected_user_id = "{{ $selected_user ? $selected_user->id : null }}";
         let $chatInput = $("#chat-input");
+        let $messageWrapper = $("#messageWrapper");
+        let $hi = $("#chat-history");
+
         $chatInput.keypress(function(e) {
             let message = $(this).val();
             if (e.which === 13 && !e.shiftKey) {
                 $chatInput.val("");
-                $('#form').submit();
+                // $('#form').submit();
+                sendMessage(message);
+                return false;
             }
         });
 
@@ -167,6 +175,59 @@
                     });
             }
         }
+
+        function sendMessage(message) {
+            let url = "{{ route('message.send-message') }}";
+            let form = $(this);
+            let formData = new FormData();
+            let token = "{{ csrf_token() }}";
+            formData.append('message', message);
+            formData.append('chat_id', selected_chat_id);
+            formData.append('sender_id', user_id);
+            formData.append('receiver_id', selected_user_id);
+            formData.append('_token', token);
+            appendMessageToSender(message);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                dataType: 'JSON',
+                success: function(response) {
+                    if (response.success) {
+                        console.log(response.data);
+                        // socket.emit('message', message, selected_user_id, selected_chat_id);
+                    }
+                }
+            });
+        }
+
+        function appendMessageToSender(message) {
+            let content = `
+                <li class="clearfix">
+                    <div class="message-data">
+                        <span class="message-data-time">10:12 AM, Today</span>
+                    </div>
+                    <div class="message my-message">${message}</div>
+                </li>
+            `;
+            $messageWrapper.append(content);
+        }
+
+        function appendMessageToReceiver(message) {
+            let content = `
+                <li class="clearfix">
+                    <div class="message-data text-right">
+                        <span class="message-data-time">10:10 AM, Today</span>
+                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
+                    </div>
+                    <div class="message other-message float-right">${message}</div>
+                </li>
+            `;
+            $messageWrapper.append(content);
+        }
+
     });
 </script>
 @endpush

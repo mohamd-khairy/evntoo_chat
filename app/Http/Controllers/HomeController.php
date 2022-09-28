@@ -103,10 +103,10 @@ class HomeController extends Controller
     public function sendMessage(Request $request)
     {
         // dd($request->all());
-        return $this->fcm(auth()->user()->name, request('message' , 'test'));
-        // $data = ['message' => request('message'), 'sender_id' => request('sender_id'), 'receiver_id' => request('receiver_id'), 'chat_id' => request('chat_id')];
-        // $data = Message::create($data);
-        // return response()->json(['success' => true, 'data' => $data]);
+        $this->fcm(auth()->user()->name, request('message', 'test'));
+        $data = ['message' => request('message'), 'sender_id' => request('sender_id'), 'receiver_id' => request('receiver_id'), 'chat_id' => request('chat_id')];
+        $data = Message::create($data);
+        return response()->json(['success' => true, 'data' => $data]);
     }
 
 

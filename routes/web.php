@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/chat', [App\Http\Controllers\HomeController::class, 'chat'])->name('chat');
-Route::post('sendmessage', [App\Http\Controllers\HomeController::class, 'sendMessage'])->name('message.send-message');
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/chat', [App\Http\Controllers\HomeController::class, 'chat'])->name('chat')->middleware('auth');
+Route::post('sendmessage', [App\Http\Controllers\HomeController::class, 'sendMessage'])->name('message.send-message');//->middleware('auth');
