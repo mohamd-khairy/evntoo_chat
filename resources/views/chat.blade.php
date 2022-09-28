@@ -113,7 +113,7 @@
         // Get registration token. Initially this makes a network call, once retrieved
         // subsequent calls to getToken will return from cache.
         messaging.getToken({
-            vapidKey: 'BGwsht947HBS1ueALEEJ7ot56SFWy6EDu1_4SaZQ2SHmUTwpMy1FrlDgxnYkyy_8bfPCKJp0xX23I58n-GS_TTo'
+            vapidKey: '<BGwsht947HBS1ueALEEJ7ot56SFWy6EDu1_4SaZQ2SHmUTwpMy1FrlDgxnYkyy_8bfPCKJp0xX23I58n-GS_TTo>'
         }).then((currentToken) => {
             if (currentToken) {
                 // Send the token to your server and update the UI if necessary
@@ -132,15 +132,15 @@
 
     function save_fcm_token(token) {
         console.log(token);
-        // axios.post('/api/save-token', {
-        //         token
-        //     })
-        //     .then(function(response) {
-        //         console.log(response);
-        //     })
-        //     .catch(function(error) {
-        //         console.log(error);
-        //     });
+        axios.post('/api/save-token', {
+                token: token,
+            })
+            .then(function(response) {
+                console.log(response);
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
     }
 </script>
 @endpush

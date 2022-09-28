@@ -53,6 +53,9 @@ class HomeController extends Controller
 
     public function save_token(Request $request)
     {
+        $user = User::find(auth()->user()->id);;
+        $user->fcm_token = $request->token ?? null;
+        $user->save();
         return response()->json($request->all());
     }
 
