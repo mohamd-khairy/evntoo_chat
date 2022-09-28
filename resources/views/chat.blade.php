@@ -159,6 +159,7 @@
             messaging.onMessage((payload) => {
                 console.log('new msg');
                 console.log(payload);
+                location.reload();
             });
 
             function save_fcm_token(token) {
