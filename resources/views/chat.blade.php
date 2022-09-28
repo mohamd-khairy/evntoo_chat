@@ -109,52 +109,64 @@
 <script>
     $(function() {
 
-        let $chatInput = $("#chat-input");
-        $chatInput.keypress(function(e) {
-            let message = $(this).val();
-            if (e.which === 13 && !e.shiftKey) {
-                $chatInput.val("");
-                $('#form').submit();
-            }
-        });
-
-        if (firebase.messaging.isSupported()) {
-            const messaging = firebase.messaging();
-            messaging.usePublicVapidKey("BGwsht947HBS1ueALEEJ7ot56SFWy6EDu1_4SaZQ2SHmUTwpMy1FrlDgxnYkyy_8bfPCKJp0xX23I58n-GS_TTo");
-
-            // Get registration token. Initially this makes a network call, once retrieved
-            // subsequent calls to getToken will return from cache.
-            messaging.getToken({
-                vapidKey: '<BGwsht947HBS1ueALEEJ7ot56SFWy6EDu1_4SaZQ2SHmUTwpMy1FrlDgxnYkyy_8bfPCKJp0xX23I58n-GS_TTo>'
-            }).then((currentToken) => {
-                if (currentToken) {
-                    // Send the token to your server and update the UI if necessary
-                    // ...
-                    save_fcm_token(currentToken);
-                } else {
-                    // Show permission request UI
-                    console.log('No registration token available. Request permission to generate one.');
-                    // ...
-                }
-            }).catch((err) => {
-                console.log('An error occurred while retrieving token. ', err);
-                // ...
-            });
-        }
-
-        function save_fcm_token(token) {
-            console.log(token);
-            axios.post('/api/save-token', {
-                    token: token,
-                    id: "{{auth()->user()->id}}"
-                })
-                .then(function(response) {
-                    console.log(response);
-                })
-                .catch(function(error) {
-                    console.log(error);
+                let $chatInput = $("#chat-input");
+                $chatInput.keypress(function(e) {
+                    let message = $(this).val();
+                    if (e.which === 13 && !e.shiftKey) {
+                        $chatInput.val("");
+                        $('#form').submit();
+                    }
                 });
-        }
-    });
+
+                if (firebase.messaging.isSupported()) {
+                    const messaging = firebase.messaging();
+                    messaging.usePublicVapidKey("BGwsht947HBS1ueALEEJ7ot56SFWy6EDu1_4SaZQ2SHmUTwpMy1FrlDgxnYkyy_8bfPCKJp0xX23I58n-GS_TTo");
+
+                    // Get registration token. Initially this makes a network call, once retrieved
+                    // subsequent calls to getToken will return from cache.
+
+                    function refreshToken() {
+                        messaging.getToken({
+                            vapidKey: '<BGwsht947HBS1ueALEEJ7ot56SFWy6EDu1_4SaZQ2SHmUTwpMy1FrlDgxnYkyy_8bfPCKJp0xX23I58n-GS_TTo>'
+                        }).then((currentToken) => {
+                            if (currentToken) {
+                                // Send the token to your server and update the UI if necessary
+                                // ...
+                                save_fcm_token(currentToken);
+                            } else {
+                                // Show permission request UI
+                                console.log('No registration token available. Request permission to generate one.');
+                                // ...
+                            }
+                        }).catch((err) => {
+                            console.log('An error occurred while retrieving token. ', err);
+                            // ...
+                        });
+                    }
+                    refreshToken();
+
+                    messaging.onTokenRefresh(() => {
+                        refreshToken();
+                    });
+
+                    messaging.onMessage((payload) => {
+                        console.log('new msg');
+                        console.log(payload);
+                    });
+
+                    function save_fcm_token(token) {
+                        console.log(token);
+                        axios.post('/api/save-token', {
+                                token: token,
+                                id: "{{auth()->user()->id}}"
+                            })
+                            .then(function(response) {
+                                console.log(response);
+                            })
+                            .catch(function(error) {
+                                console.log(error);
+                            });
+                    }
+                });
 </script>
 @endpush
