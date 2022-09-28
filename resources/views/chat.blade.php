@@ -159,7 +159,7 @@
             messaging.onMessage((payload) => {
                 console.log('new msg');
                 console.log(payload);
-                location.reload();
+                // location.reload();
                 if (selected_user_id == payload.data.user_id) {
                     appendMessageToReceiver(payload.data.message)
                 }
