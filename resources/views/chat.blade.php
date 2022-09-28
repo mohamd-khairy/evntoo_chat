@@ -159,7 +159,8 @@
             messaging.onMessage((payload) => {
                 console.log('new msg');
                 console.log(payload);
-                location.reload();
+                // location.reload();
+                appendMessageToReceiver('test')
             });
 
             function save_fcm_token(token) {
