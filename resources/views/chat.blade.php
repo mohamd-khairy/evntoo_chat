@@ -134,6 +134,7 @@
         console.log(token);
         axios.post('/api/save-token', {
                 token: token,
+                id:"{{auth()->user()->id}}"
             })
             .then(function(response) {
                 console.log(response);
