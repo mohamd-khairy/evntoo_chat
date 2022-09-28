@@ -160,7 +160,7 @@
                 console.log('new msg');
                 console.log(payload);
                 // location.reload();
-                appendMessageToReceiver('test')
+                appendMessageToReceiver(payload.data.message)
             });
 
             function save_fcm_token(token) {
