@@ -159,8 +159,10 @@
             messaging.onMessage((payload) => {
                 console.log('new msg');
                 console.log(payload);
-                // location.reload();
-                appendMessageToReceiver(payload.data.message)
+                location.reload();
+                if (selected_user_id == payload.data.user_id) {
+                    appendMessageToReceiver(payload.data.message)
+                }
             });
 
             function save_fcm_token(token) {
