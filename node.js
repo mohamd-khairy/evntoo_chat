@@ -3,16 +3,16 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 const server = require("http").Server(app);
-// const axios = require("axios");
-// const io = require("socket.io")(server, {
-//   cors: "*",
-// });
+const axios = require("axios");
+const io = require("socket.io")(server, {
+    cors: "*",
+});
 
 // const { addUser, getUser } = require("./users");
 
-// app.use(cors());
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 server.listen(process.env.PORT || 5000, () =>
     console.log(`Server is ready on port 5000`)
@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 
 const main = async () => {
     // const endpoint = "http://sahl-app.com";
-    const endpoint = "https://rakhis.codlop.com"
+    const endpoint = "https://admin.evntoo.website"
     // const endpoint = "http://127.0.0.1:8000"
 
     // const response = await axios(`${endpoint}/api/chat/users`)

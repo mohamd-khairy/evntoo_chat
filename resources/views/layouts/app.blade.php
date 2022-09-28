@@ -25,8 +25,51 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
-    
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-messaging.js"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyAzF4LwExbssw-d3APPFgUz1RsQHFLwluE",
+            authDomain: "evntoomap.firebaseapp.com",
+            projectId: "evntoomap",
+            storageBucket: "evntoomap.appspot.com",
+            messagingSenderId: "408472667738",
+            appId: "1:408472667738:web:b0fae95ae26ad784d17a63",
+            measurementId: "G-EDMQ72LN2W"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- <script type="module">
+        // Import the functions you need from the SDKs you need
+        import {
+            initializeApp
+        } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
+        import {
+            getAnalytics
+        } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyAzF4LwExbssw-d3APPFgUz1RsQHFLwluE",
+            authDomain: "evntoomap.firebaseapp.com",
+            projectId: "evntoomap",
+            storageBucket: "evntoomap.appspot.com",
+            messagingSenderId: "408472667738",
+            appId: "1:408472667738:web:b0fae95ae26ad784d17a63",
+            measurementId: "G-EDMQ72LN2W"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    </script> -->
 
     <style type="text/css">
         .chat-app .people-list {
