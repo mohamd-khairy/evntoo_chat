@@ -103,14 +103,14 @@ class HomeController extends Controller
     public function sendMessage(Request $request)
     {
         // dd($request->all());
-        $this->fcm(request('chat_id'), auth()->user()->name, request('message', 'test'));
+        $this->fcm(request('receiver_id'), request('chat_id'), auth()->user()->name, request('message', 'test'));
         $data = ['message' => request('message'), 'sender_id' => request('sender_id'), 'receiver_id' => request('receiver_id'), 'chat_id' => request('chat_id')];
         $data = Message::create($data);
         return response()->json(['success' => true, 'data' => $data]);
     }
 
 
-    public function fcm($chat_id, $senderName = 'mohamed', $msg = 'hello world')
+    public function fcm($receiver_id, $chat_id, $senderName = 'mohamed', $msg = 'hello world')
     {
         $optionBuilder = new OptionsBuilder();
         $optionBuilder->setTimeToLive(60 * 20);
@@ -121,7 +121,7 @@ class HomeController extends Controller
             ->setClickAction('https://chat.evntoo.website');
 
         $dataBuilder = new PayloadDataBuilder();
-        $dataBuilder->addData(['chat_id' => $chat_id, 'senderName' => $senderName, 'message' => $msg]);
+        $dataBuilder->addData(['receiver_id' => $receiver_id, 'chat_id' => $chat_id, 'senderName' => $senderName, 'message' => $msg]);
 
         $option = $optionBuilder->build();
         $notification = $notificationBuilder->build();
