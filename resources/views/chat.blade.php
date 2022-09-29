@@ -200,7 +200,7 @@
                 dataType: 'JSON',
                 success: function(response) {
                     if (response.success) {
-                        console.log(response.data);
+                        // console.log(response.data);
                         // socket.emit('message', message, selected_user_id, selected_chat_id);
                     }
                 }
