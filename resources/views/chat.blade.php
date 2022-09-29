@@ -160,7 +160,7 @@
                 console.log('new msg');
                 console.log(payload);
                 // location.reload();
-                if (user_id == payload.data.user_id) {
+                if (selected_chat_id == payload.data.chat_id) {
                     appendMessageToReceiver(payload.data.message)
                 }
             });
